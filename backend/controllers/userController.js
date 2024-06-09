@@ -1,20 +1,19 @@
-// controllers/userController.js
+
 
 import User from '../models/User.js';
 import bcrypt from 'bcryptjs';
 
-// Create a new user
 export const createUser = async (req, res) => {
   try {
     const { username, password, isAdmin } = req.body;
 
-    // Check if user already exists
+    
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists' });
     }
 
-    // Hash the password before saving
+    
     const hashedPassword = await bcrypt.hash(password, 12);
 
     const newUser = new User({ username, password: hashedPassword, isAdmin });
@@ -26,19 +25,19 @@ export const createUser = async (req, res) => {
   }
 };
 
-// Edit an existing user
+
 export const editUser = async (req, res) => {
   try {
     const { username, password, isAdmin } = req.body;
     const updates = { username, isAdmin };
 
-    // Hash the new password if it is provided
+ 
     if (password) {
       updates.password = await bcrypt.hash(password, 12);
     }
 
-    console.log(`Updating user with ID: ${req.params.id}`); // Log user ID
-    console.log('Updates:', updates); // Log updates
+    console.log(`Updating user with ID: ${req.params.id}`); 
+    console.log('Updates:', updates); 
 
     const updatedUser = await User.findByIdAndUpdate(req.params.id, updates, { new: true });
     
@@ -48,12 +47,12 @@ export const editUser = async (req, res) => {
       res.status(404).json({ message: 'User not found' });
     }
   } catch (error) {
-    console.error('Error updating user:', error); // More detailed logging
+    console.error('Error updating user:', error); 
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
 
-// Delete a user
+
 export const deleteUser = async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
@@ -67,7 +66,6 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-// Get a list of users
 export const getUsers = async (req, res) => {
   try {
     const search = req.query.search ? { username: new RegExp(req.query.search, 'i') } : {};
@@ -79,7 +77,7 @@ export const getUsers = async (req, res) => {
   }
 };
 
-// Get a specific user by ID
+
 export const getUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);

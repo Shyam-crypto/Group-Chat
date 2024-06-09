@@ -10,11 +10,11 @@ describe('User Endpoints', () => {
   let userId;
 
   beforeAll(async () => {
-    // Connect to the test database
+    
     const db = process.env.MONGO_URI;
     await mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
 
-    // Create an admin user for authentication tests
+   
     await request(app)
       .post('/api/auth/register')
       .send({ username: 'admin', password: 'adminpass', isAdmin: true });
@@ -26,7 +26,7 @@ describe('User Endpoints', () => {
     adminToken = response.body.token;
     console.log('Admin Token:', adminToken);
 
-    // Create a test user for later tests
+   
     const userResponse = await request(app)
       .post('/api/auth/register')
       .send({ username: 'testuser', password: 'password123' });
@@ -36,7 +36,7 @@ describe('User Endpoints', () => {
   });
 
   afterAll(async () => {
-    // Clean up the database and close the connection
+    
     await mongoose.connection.dropDatabase();
     await mongoose.connection.close();
   });
@@ -65,7 +65,7 @@ describe('User Endpoints', () => {
       .set('Authorization', `Bearer ${adminToken}`)
       .send({ username: 'updateduser' });
 
-    console.log(res.body); // Log the response for debugging
+    console.log(res.body); 
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('username', 'updateduser');
@@ -76,7 +76,7 @@ describe('User Endpoints', () => {
       .delete(`/api/users/${userId}`)
       .set('Authorization', `Bearer ${adminToken}`);
 
-    console.log(res.body); // Log the response for debugging
+    console.log(res.body);
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('message', 'User deleted successfully');
@@ -87,7 +87,7 @@ describe('User Endpoints', () => {
       .get('/api/users?search=updateduser')
       .set('Authorization', `Bearer ${adminToken}`);
 
-    console.log(res.body); // Log the response for debugging
+    console.log(res.body); 
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('users');

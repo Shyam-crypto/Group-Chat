@@ -1,4 +1,4 @@
-// middleware/authMiddleware.js
+
 import jwt from 'jsonwebtoken';
 
 export const verifyToken = (req, res, next) => {
@@ -16,7 +16,7 @@ export const verifyToken = (req, res, next) => {
 };
 
 export const isAdmin = (req, res, next) => {
-  // Assuming you have a way to check if the user is an admin, for example, from the database
+
   User.findById(req.userId).then(user => {
     if (user && user.isAdmin) {
       next();

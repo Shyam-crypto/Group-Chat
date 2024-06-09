@@ -45,7 +45,7 @@ describe('Group Message Endpoints', () => {
       .set('Authorization', `Bearer ${userToken}`)
       .send({ content: 'Hello, group!' });
 
-    console.log('Send Message Response:', res.body); // Log the response for debugging
+    console.log('Send Message Response:', res.body); 
 
     messageId = res.body._id;
     expect(res.statusCode).toEqual(201);
@@ -57,7 +57,7 @@ describe('Group Message Endpoints', () => {
       .post(`/api/groups/${groupId}/messages/${messageId}/like`)
       .set('Authorization', `Bearer ${userToken}`);
 
-    console.log('Like Message Response:', res.body); // Log the response for debugging
+    console.log('Like Message Response:', res.body); 
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('likes');

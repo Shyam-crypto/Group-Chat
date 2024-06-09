@@ -37,7 +37,7 @@ describe('Group Endpoints', () => {
       .set('Authorization', `Bearer ${userToken}`)
       .send({ name: 'testgroup' });
 
-    console.log('Create Group Response:', res.body); // Log the response for debugging
+    console.log('Create Group Response:', res.body); 
 
     groupId = res.body._id;
     expect(res.statusCode).toEqual(201);
@@ -49,7 +49,7 @@ describe('Group Endpoints', () => {
       .get('/api/groups?search=testgroup')
       .set('Authorization', `Bearer ${userToken}`);
 
-    console.log('Search Groups Response:', res.body); // Log the response for debugging
+    console.log('Search Groups Response:', res.body); 
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('groups');
@@ -62,7 +62,7 @@ describe('Group Endpoints', () => {
       .set('Authorization', `Bearer ${userToken}`)
       .send({ userId });
 
-    console.log('Add Member Response:', res.body); // Log the response for debugging
+    console.log('Add Member Response:', res.body); 
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('members');
@@ -74,7 +74,7 @@ describe('Group Endpoints', () => {
       .delete(`/api/groups/${groupId}`)
       .set('Authorization', `Bearer ${userToken}`);
 
-    console.log('Delete Group Response:', res.body); // Log the response for debugging
+    console.log('Delete Group Response:', res.body); 
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('message', 'Group deleted successfully');
